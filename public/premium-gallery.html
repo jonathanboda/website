@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Premium Image Gallery - Elvenwood</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
+  color: #fff;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 80px 40px;
+}
+
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 4.5rem;
+  font-weight: 900;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #fff;
+  text-shadow: 0 0 40px rgba(212, 175, 55, 0.6);
+  position: relative;
+  opacity: 0;
+  transition: all 1s ease;
+}
+
+h1.visible {
+  opacity: 1;
+  text-shadow: 0 0 40px rgba(212, 175, 55, 0.8), 0 0 80px rgba(212, 175, 55, 0.4);
+}
+
+h1::after {
+  content: '';
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #d4af37, transparent);
+  width: 0%;
+  transition: width 1.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+h1.visible::after {
+  width: 40%;
+}
+
+p.subtitle {
+  text-align: center;
+  font-size: 1.3rem;
+  color: #d4af37;
+  margin-bottom: 80px;
+  font-weight: 300;
+  letter-spacing: 2px;
+  opacity: 0;
+  transition: opacity 1s ease 0.3s;
+}
+
+p.subtitle.visible {
+  opacity: 1;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  gap: 40px;
+  perspective: 1200px;
+}
+
+.image-card {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(-150px) translateZ(100px) rotateX(25deg) scale(0.85);
+  transition: all 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6), 0 0 60px rgba(212, 175, 55, 0.15);
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.image-card.visible {
+  opacity: 1;
+  transform: translateY(0) translateZ(0) rotateX(0deg) scale(1);
+}
+
+.image-card img {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s ease;
+  filter: brightness(0.95) saturate(1.1);
+}
+
+.image-card:hover img {
+  transform: scale(1.08);
+  filter: brightness(1) saturate(1.2);
+}
+
+.image-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, transparent 50%, rgba(212, 175, 55, 0.05) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.image-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(26, 26, 26, 0.8) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.tech-badge {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background: rgba(212, 175, 55, 0.15);
+  backdrop-filter: blur(10px);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #d4af37;
+  z-index: 3;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  letter-spacing: 1px;
+}
+
+footer {
+  margin-top: 100px;
+  padding: 40px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(20px);
+  border-radius: 30px;
+  border: 1px solid rgba(212, 175, 55, 0.1);
+}
+
+footer p {
+  font-size: 0.9rem;
+  color: #aaa;
+  margin-bottom: 8px;
+  letter-spacing: 1px;
+}
+
+footer p:last-child {
+  color: #888;
+  font-size: 0.8rem;
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2.5rem;
+  }
+  .gallery {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1 id="main-heading">ELVENWOOD GALLERY</h1>
+  <p class="subtitle" id="subtitle">PRECISION. CRAFTSMANSHIP. EXCELLENCE.</p>
+
+  <div class="gallery" id="gallery">
+    <div class="image-card" data-tilt>
+      <img src="https://images.unsplash.com/photo-1556909172-54557c7e4fb7?w=800&h=600&fit=crop" alt="Luxury Kitchen">
+      <span class="tech-badge">PREMIUM DESIGN</span>
+    </div>
+    <div class="image-card" data-tilt>
+      <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=800&h=600&fit=crop" alt="Modern Living">
+      <span class="tech-badge">CNC CRAFTED</span>
+    </div>
+    <div class="image-card" data-tilt>
+      <img src="https://images.unsplash.com/photo-1617806118233-18e1de247200?w=800&h=600&fit=crop" alt="Bedroom Design">
+      <span class="tech-badge">BESPOKE</span>
+    </div>
+    <div class="image-card" data-tilt>
+      <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&h=600&fit=crop" alt="Kitchen Excellence">
+      <span class="tech-badge">MODULAR</span>
+    </div>
+    <div class="image-card" data-tilt>
+      <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=800&h=600&fit=crop" alt="Interior Elegance">
+      <span class="tech-badge">TURNKEY</span>
+    </div>
+    <div class="image-card" data-tilt>
+      <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&h=600&fit=crop" alt="Contemporary Space">
+      <span class="tech-badge">LUXURY</span>
+    </div>
+  </div>
+
+  <footer>
+    <p>POWERED BY ADVANCED BIESSE CNC TECHNOLOGY</p>
+    <p>ENHANCED BY ZOHO ERP FOR SEAMLESS PROJECT MANAGEMENT</p>
+  </footer>
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  const heading = document.getElementById('main-heading');
+  const subtitle = document.getElementById('subtitle');
+  const cards = document.querySelectorAll('.image-card');
+
+  const observerOptions = {
+    threshold: 0.15,
+    rootMargin: '0px 0px -50px 0px'
+  };
+
+  const headingObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, observerOptions);
+
+  if (heading) headingObserver.observe(heading);
+  if (subtitle) headingObserver.observe(subtitle);
+
+  const cardObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry, index) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, index * 150);
+      }
+    });
+  }, observerOptions);
+
+  cards.forEach(card => cardObserver.observe(card));
+
+  cards.forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      const rotateX = (y - centerY) / 15;
+      const rotateY = (centerX - x) / 15;
+
+      card.style.transform = `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(20px) scale(1.02)`;
+    });
+
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = 'perspective(1200px) rotateX(0deg) rotateY(0deg) translateZ(0) scale(1)';
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

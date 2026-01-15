@@ -24,17 +24,18 @@ export default function KitchenShapeCard({
             src={image}
             alt={shape}
             fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 20vw"
             className="object-cover group-hover:scale-105 transition-transform duration-500"
           />
         </div>
         <div className="p-6">
-          <h3 className="text-lg font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition">
+          <h3 className="text-lg font-bold text-gray-900 mb-3 group-hover:text-orange-500 transition">
             {shape}
           </h3>
           <ul className="space-y-2">
             {benefits.map((benefit, idx) => (
-              <li key={idx} className="text-xs text-gray-600 flex items-start">
-                <span className="mr-2 text-blue-600">✓</span>
+              <li key={idx} className="text-sm text-gray-600 flex items-start">
+                <span className="mr-2 text-orange-500">✓</span>
                 {benefit}
               </li>
             ))}

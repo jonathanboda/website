@@ -1,0 +1,127 @@
+{
+  "devNote": "To implement parallax layering: Layer img-XX_fg.png (foreground cutout) over img-XX_desktop.jpg (base image) using CSS position:absolute. Use img-XX_depth.png as a displacement map for WebGL/Three.js parallax effects - white areas (nearest) should move fastest, black areas (far) slowest. Apply CSS transform: translateX() based on scroll position, multiplying by layer speed (foreground: 1.5x, midground: 1.0x, background: 0.5x).",
+
+  "cornerFrame": {
+    "filename": "corner-frame.svg",
+    "description": "SVG corner frame with stroke-dashoffset animation ready paths",
+    "strokeColor": "#e6e6e6",
+    "usage": "Animate stroke-dasharray and stroke-dashoffset for reveal effect"
+  },
+
+  "images": [
+    {
+      "id": "img-01",
+      "originalFilename": "biesse_RoverCutGo_SF_D5.webp",
+      "editedFilenames": {
+        "desktop": "img-01_desktop.jpg",
+        "tablet": "img-01_tablet.jpg",
+        "mobile": "img-01_mobile.jpg",
+        "desktopWebp": "img-01_desktop.webp",
+        "tabletWebp": "img-01_tablet.webp",
+        "mobileWebp": "img-01_mobile.webp",
+        "foreground": "img-01_fg.png",
+        "depth": "img-01_depth.png",
+        "preview": "img-01_preview.jpg",
+        "source": "img-01_edit.psd"
+      },
+      "altText": "Modular kitchen layout — Advanced CNC cutting machine with precision woodworking",
+      "transformOrigin": "center center",
+      "layer": "foreground",
+      "parallaxSpeed": 1.5
+    },
+    {
+      "id": "img-02",
+      "originalFilename": "RoverEdgeGoSS_C_D5_i5.webp",
+      "editedFilenames": {
+        "desktop": "img-02_desktop.jpg",
+        "tablet": "img-02_tablet.jpg",
+        "mobile": "img-02_mobile.jpg",
+        "desktopWebp": "img-02_desktop.webp",
+        "tabletWebp": "img-02_tablet.webp",
+        "mobileWebp": "img-02_mobile.webp",
+        "foreground": "img-02_fg.png",
+        "depth": "img-02_depth.png",
+        "preview": "img-02_preview.jpg",
+        "source": "img-02_edit.psd"
+      },
+      "altText": "Modular kitchen layout — Precision edge banding for seamless finishes",
+      "transformOrigin": "center center",
+      "layer": "midground",
+      "parallaxSpeed": 1.0
+    },
+    {
+      "id": "img-03",
+      "originalFilename": "RoverMultiUpMCS_D5_i5.webp",
+      "editedFilenames": {
+        "desktop": "img-03_desktop.jpg",
+        "tablet": "img-03_tablet.jpg",
+        "mobile": "img-03_mobile.jpg",
+        "desktopWebp": "img-03_desktop.webp",
+        "tabletWebp": "img-03_tablet.webp",
+        "mobileWebp": "img-03_mobile.webp",
+        "foreground": "img-03_fg.png",
+        "depth": "img-03_depth.png",
+        "preview": "img-03_preview.jpg",
+        "source": "img-03_edit.psd"
+      },
+      "altText": "Modular kitchen layout — 5-axis machining center for complex cuts",
+      "transformOrigin": "center center",
+      "layer": "background",
+      "parallaxSpeed": 0.5
+    },
+    {
+      "id": "img-04",
+      "originalFilename": "plywood lamination.png",
+      "editedFilenames": {
+        "desktop": "img-04_desktop.jpg",
+        "tablet": "img-04_tablet.jpg",
+        "mobile": "img-04_mobile.jpg",
+        "desktopWebp": "img-04_desktop.webp",
+        "tabletWebp": "img-04_tablet.webp",
+        "mobileWebp": "img-04_mobile.webp",
+        "foreground": "img-04_fg.png",
+        "depth": "img-04_depth.png",
+        "preview": "img-04_preview.jpg",
+        "source": "img-04_edit.psd"
+      },
+      "altText": "Modular kitchen layout — Plywood lamination pressing for durable surfaces",
+      "transformOrigin": "center center",
+      "layer": "foreground",
+      "parallaxSpeed": 1.5
+    }
+  ],
+
+  "cardStyling": {
+    "borderRadius": "12px",
+    "boxShadow": "0 14px 30px rgba(0, 0, 0, 0.25)",
+    "stroke": "1.5px solid #f1f1f1",
+    "perspective": "800px",
+    "tiltAngle": "-2deg"
+  },
+
+  "colorGrading": {
+    "highlights": "slightly warm",
+    "midtones": "neutral",
+    "shadows": "muted",
+    "microGrain": "low opacity (3%)",
+    "saturation": 1.05,
+    "contrast": 1.02,
+    "brightness": 1.02
+  },
+
+  "exportSpecs": {
+    "desktop": { "width": 1600, "format": "progressive JPEG", "quality": 82 },
+    "tablet": { "width": 1200, "format": "progressive JPEG", "quality": 80 },
+    "mobile": { "width": 800, "format": "progressive JPEG", "quality": 78 },
+    "webp": { "quality": 80 },
+    "preview": { "width": 400 },
+    "foreground": { "maxWidth": 1600, "format": "PNG with transparency" },
+    "depth": { "format": "8-bit grayscale PNG", "whiteNearest": true, "blackFar": true }
+  },
+
+  "notes": {
+    "cutoutStatus": "Machine images have complex backgrounds. Recommend using mask-based approach (img-XX_mask.png) with white subject / black background for WebGL displacement. Manual rotoscoping may be needed for cleanest results.",
+    "depthMapGuidance": "Depth maps should have smooth gradients. Main machine body should be white/light gray, background elements progressively darker.",
+    "colorProfile": "sRGB, strip unnecessary metadata"
+  }
+}

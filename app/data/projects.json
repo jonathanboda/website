@@ -1,0 +1,148 @@
+{
+  "projects": [
+    {
+      "id": "1",
+      "title": "Contemporary French Kitchen",
+      "category": "Kitchen",
+      "style": "French Contemporary",
+      "location": "Mumbai, Maharashtra",
+      "year": "2024",
+      "sqft": "180 sq ft",
+      "duration": "3 weeks",
+      "featured": true,
+      "images": [
+        "/images/facility/Kitchen — Engineered For Everyday.jpg",
+        "/images/facility/L-Shaped Kitchen.jpg",
+        "/images/facility/U-Shaped Kitchen.jpg"
+      ],
+      "video": "/videos/rooms/kitchen room.mp4",
+      "description": "A stunning French contemporary kitchen featuring premium finishes, custom cabinetry, and state-of-the-art appliances."
+    },
+    {
+      "id": "2",
+      "title": "Modern Living Space",
+      "category": "Living Space",
+      "style": "Modern Minimalist",
+      "location": "Delhi, NCR",
+      "year": "2024",
+      "sqft": "320 sq ft",
+      "duration": "2 weeks",
+      "featured": false,
+      "images": [
+        "/images/facility/Living Room — Gather & Relax.avif",
+        "/images/facility/Turnkey Execution.jpg",
+        "/images/facility/FINAL STYLING.webp"
+      ],
+      "video": "/videos/rooms/living room.mp4",
+      "description": "An elegant modern living space with clean lines, natural lighting, and comfortable seating arrangements."
+    },
+    {
+      "id": "3",
+      "title": "Minimalist Galley Kitchen",
+      "category": "Kitchen",
+      "style": "Modern Minimalist",
+      "location": "Bangalore, Karnataka",
+      "year": "2024",
+      "sqft": "120 sq ft",
+      "duration": "2 weeks",
+      "featured": false,
+      "images": [
+        "/images/facility/Parallel (Galley) Kitchen.png",
+        "/images/facility/Straight Line Kitchen.jpg",
+        "/images/facility/Island Kitchen.jpg"
+      ],
+      "video": "/videos/rooms/kitchen room.mp4",
+      "description": "A sleek minimalist galley kitchen optimized for efficiency and modern aesthetics."
+    },
+    {
+      "id": "4",
+      "title": "Luxurious Master Bedroom",
+      "category": "Bedroom",
+      "style": "Contemporary Luxury",
+      "location": "Hyderabad, Telangana",
+      "year": "2024",
+      "sqft": "250 sq ft",
+      "duration": "2 weeks",
+      "featured": false,
+      "images": [
+        "/images/facility/bed rooms/bed room 1.jpg",
+        "/images/facility/bed rooms/bed room 2.jpg",
+        "/images/facility/bed rooms/bed room 3.jpg"
+      ],
+      "video": "/videos/rooms/bedroom.mp4",
+      "description": "A luxurious master bedroom featuring plush furnishings, ambient lighting, and custom wardrobes."
+    },
+    {
+      "id": "5",
+      "title": "Elegant Dining Room",
+      "category": "Dining Room",
+      "style": "Classic Elegant",
+      "location": "Chennai, Tamil Nadu",
+      "year": "2024",
+      "sqft": "180 sq ft",
+      "duration": "10 days",
+      "featured": false,
+      "images": [
+        "/images/facility/dining room/dining room 1.jpg",
+        "/images/facility/dining room/dining room 2.jpg",
+        "/images/facility/dining room/dining room 3.jpg"
+      ],
+      "video": "/videos/rooms/dininig room.mp4",
+      "description": "An elegant dining room designed for memorable family gatherings and special occasions."
+    },
+    {
+      "id": "6",
+      "title": "Playful Kids Room",
+      "category": "Kids Room",
+      "style": "Fun & Functional",
+      "location": "Pune, Maharashtra",
+      "year": "2024",
+      "sqft": "150 sq ft",
+      "duration": "10 days",
+      "featured": false,
+      "images": [
+        "/images/facility/kids room/kids room1.jpg",
+        "/images/facility/kids room/kids room 2.jpg",
+        "/images/facility/kids room/kids room 3.jpg"
+      ],
+      "video": "/videos/rooms/kids room.mp4",
+      "description": "A vibrant and safe kids room designed to inspire creativity and provide comfortable play areas."
+    },
+    {
+      "id": "7",
+      "title": "Island Kitchen Design",
+      "category": "Kitchen",
+      "style": "Modern Premium",
+      "location": "Gurgaon, Haryana",
+      "year": "2024",
+      "sqft": "220 sq ft",
+      "duration": "4 weeks",
+      "featured": true,
+      "images": [
+        "/images/facility/Island Kitchen.jpg",
+        "/images/facility/L-Shaped Kitchen.jpg",
+        "/images/facility/Kitchen — Engineered For Everyday.jpg"
+      ],
+      "video": "/videos/rooms/kitchen room.mp4",
+      "description": "A premium island kitchen with ample workspace, modern appliances, and elegant storage solutions."
+    },
+    {
+      "id": "8",
+      "title": "Cozy Living Corner",
+      "category": "Living Space",
+      "style": "Warm Contemporary",
+      "location": "Kolkata, West Bengal",
+      "year": "2024",
+      "sqft": "280 sq ft",
+      "duration": "2 weeks",
+      "featured": false,
+      "images": [
+        "/images/facility/FINAL STYLING.webp",
+        "/images/facility/Living Room — Gather & Relax.avif",
+        "/images/facility/Turnkey Execution.jpg"
+      ],
+      "video": "/videos/rooms/living room.mp4",
+      "description": "A warm and inviting living space perfect for relaxation and entertainment."
+    }
+  ]
+}

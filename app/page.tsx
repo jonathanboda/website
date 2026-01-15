@@ -1,10 +1,45 @@
 'use client';
 
 import { useState } from 'react';
-import CapabilityCard from './components/CapabilityCard';
-import RoomCard from './components/RoomCard';
+import { motion } from 'framer-motion';
 import ModalEnquiry, { EnquiryData } from './components/ModalEnquiry';
-import ImageWithMotion from './components/ImageWithMotion';
+
+// Home Section Components
+import HeroSection from './components/home/HeroSection';
+import TrustIndicators from './components/home/TrustIndicators';
+import AboutSnippet from './components/home/AboutSnippet';
+import ServicesOverview from './components/home/ServicesOverview';
+import HowItWorks from './components/home/HowItWorks';
+import WhyChooseUs from './components/home/WhyChooseUs';
+import FinalCTA from './components/home/FinalCTA';
+
+// Additional Components
+import RoomShowcase from './components/RoomShowcase';
+import TestimonialsCarousel from './components/TestimonialsCarousel';
+import ExpertiseCarousel from './components/ExpertiseCarousel';
+
+// Section wrapper with motion
+function MotionSection({
+  children,
+  className = '',
+  delay = 0,
+}: {
+  children: React.ReactNode;
+  className?: string;
+  delay?: number;
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.1 }}
+      transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] as const, delay }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+}
 
 export default function HomePage() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -20,88 +55,76 @@ export default function HomePage() {
     alert('Thank you! We will contact you soon.');
   };
 
+  const openModal = () => setModalOpen(true);
+
   return (
     <div className="bg-white">
-      {/* Hero Section */}
-      <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white pt-20">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-fadeIn">
-            Luxury Interior Design
-          </h1>
-          <p className="text-lg md:text-2xl text-gray-300 mb-8 animate-fadeIn">
-            Transform your space into a sanctuary of elegance and comfort
-          </p>
-          <button
-            onClick={() => setModalOpen(true)}
-            className="btn-luxury mb-8 animate-scaleIn"
-          >
-            Get Started
-          </button>
-        </div>
-      </section>
+      {/* 1. Hero Section */}
+      <HeroSection onOpenEnquiry={openModal} />
 
-      {/* Capabilities */}
-      <section className="max-w-7xl mx-auto px-6 py-20">
-        <h2 className="text-4xl font-bold text-center mb-12">Our Capabilities</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <CapabilityCard
-            title="Custom Design"
-            description="Tailored interior solutions that match your unique style and lifestyle."
-          />
-          <CapabilityCard
-            title="Expert Execution"
-            description="Professional installation and finishing with meticulous attention to detail."
-          />
-          <CapabilityCard
-            title="Consultation"
-            description="In-depth consultations to understand your vision and bring it to life."
-          />
-        </div>
-      </section>
+      {/* 2. Trust Indicators */}
+      <TrustIndicators />
 
-      {/* Featured Rooms */}
-      <section className="bg-gray-50 py-20">
-        <div className="max-w-7xl mx-auto px-6">
-          <h2 className="text-4xl font-bold text-center mb-12">Featured Rooms</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <RoomCard
-              href="/living-room"
-              image="/placeholder.jpg"
-              title="Living Room"
-              description="Modern comfort meets elegant design in our living room transformations."
-            />
-            <RoomCard
-              href="/kitchen"
-              image="/placeholder.jpg"
-              title="Kitchen"
-              description="Luxury kitchens designed for both function and style."
-            />
-            <RoomCard
-              href="/bedroom"
-              image="/placeholder.jpg"
-              title="Bedroom"
-              description="Create your personal sanctuary with our bedroom designs."
-            />
-          </div>
-        </div>
-      </section>
+      {/* 3. About Snippet */}
+      <AboutSnippet />
 
-      {/* CTA */}
-      <section className="bg-gray-900 text-white py-20 text-center">
-        <div className="max-w-3xl mx-auto px-6">
-          <h2 className="text-4xl font-bold mb-6">Ready to Transform Your Space?</h2>
-          <p className="text-lg text-gray-300 mb-8">
-            Let our design experts help you create the home of your dreams.
-          </p>
-          <button
-            onClick={() => setModalOpen(true)}
-            className="btn-luxury"
-          >
-            Enquire Now
-          </button>
-        </div>
-      </section>
+      {/* 4. Services Overview */}
+      <ServicesOverview />
 
+      {/* 5. How It Works */}
+      <HowItWorks />
+
+      {/* 6. Expertise Carousel */}
+      <MotionSection>
+        <ExpertiseCarousel
+          items={[
+            {
+              title: 'Strategic Planning',
+              description: 'Optimizing spatial flow and functionality tailored to your lifestyle.',
+              image: '/images/facility/Strategic Planning INTERIOR.jpg',
+            },
+            {
+              title: 'Modular Manufacturing',
+              description: 'Precision-crafted furniture and bespoke elements produced in-house.',
+              image: '/images/facility/MODULAR MAN.png',
+            },
+            {
+              title: 'Turnkey Execution',
+              description: 'Seamless end-to-end project delivery with zero compromise on quality.',
+              image: '/images/facility/Turnkey Execution.jpg',
+            },
+            {
+              title: 'Material Curation',
+              description: 'Sourcing premium materials and establishing partnerships with trusted vendors.',
+              image: '/images/facility/Material Curation.jpg',
+            },
+            {
+              title: 'Final Styling',
+              description: 'Curated finishing touches and accessories that complete your vision.',
+              image: '/images/facility/FINAL STYLING.webp',
+            },
+          ]}
+          onCardClick={openModal}
+        />
+      </MotionSection>
+
+      {/* 7. Why Choose Us */}
+      <WhyChooseUs />
+
+      {/* 8. Room Showcase */}
+      <MotionSection>
+        <RoomShowcase onTellYourStory={openModal} />
+      </MotionSection>
+
+      {/* 9. Testimonials */}
+      <MotionSection>
+        <TestimonialsCarousel />
+      </MotionSection>
+
+      {/* 10. Final CTA */}
+      <FinalCTA onOpenEnquiry={openModal} />
+
+      {/* Modal */}
       <ModalEnquiry
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
