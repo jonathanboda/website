@@ -56,7 +56,7 @@ export default function ScrollAnimation({
             initial="hidden"
             whileInView="visible"
             viewport={viewport}
-            transition={{ duration, delay, ease: 'easeOut' }}
+            transition={{ duration, delay, ease: 'easeOut' as const }}
             variants={selectedVariant}
             className={className}
         >

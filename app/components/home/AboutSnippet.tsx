@@ -22,7 +22,7 @@ export default function AboutSnippet() {
       y: 0,
       transition: {
         duration: 0.7,
-        ease: 'easeOut',
+        ease: 'easeOut' as const,
       },
     },
   };
@@ -35,7 +35,7 @@ export default function AboutSnippet() {
       x: 0,
       transition: {
         duration: 0.8,
-        ease: 'easeOut',
+        ease: 'easeOut' as const,
       },
     },
   };

@@ -133,7 +133,7 @@ export default function OurImpact() {
                       className={`h-1 ${stat.barColor} rounded-full mb-3`}
                       initial={{ width: '0%' }}
                       animate={isVisible ? { width: '100%' } : {}}
-                      transition={{ duration: 1.5, delay: 0.6 + index * 0.2, ease: 'easeOut' }}
+                      transition={{ duration: 1.5, delay: 0.6 + index * 0.2, ease: 'easeOut' as const }}
                     />
 
                     {/* Label */}

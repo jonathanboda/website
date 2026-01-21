@@ -35,7 +35,6 @@ export default function HeroVideo({
     };
 
     const handleError = () => {
-      console.log('HeroVideo: Video failed to load');
       setVideoError(true);
     };
 

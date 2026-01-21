@@ -42,7 +42,7 @@ export default function WhyChooseUs() {
       y: 0,
       transition: {
         duration: 0.7,
-        ease: 'easeOut',
+        ease: 'easeOut' as const,
       },
     },
   };
@@ -55,7 +55,7 @@ export default function WhyChooseUs() {
       scale: 1,
       transition: {
         duration: 0.7,
-        ease: 'easeOut',
+        ease: 'easeOut' as const,
       },
     },
   };

@@ -28,7 +28,7 @@ export default function TrustIndicators() {
       scale: 1,
       transition: {
         duration: 0.6,
-        ease: 'easeOut',
+        ease: 'easeOut' as const,
       },
     },
   };
@@ -63,7 +63,7 @@ export default function TrustIndicators() {
                   initial={{ scaleX: 0 }}
                   whileInView={{ scaleX: 1 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: 0.3 + index * 0.1, ease: 'easeOut' }}
+                  transition={{ duration: 0.6, delay: 0.3 + index * 0.1, ease: 'easeOut' as const }}
                   className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-orange-500 to-orange-400 rounded-full origin-left"
                 />
               </div>

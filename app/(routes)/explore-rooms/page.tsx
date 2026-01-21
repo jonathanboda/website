@@ -20,8 +20,8 @@ export default function ProjectsPage() {
           const data = await res.json();
           setProjects(data.projects);
         }
-      } catch (error) {
-        console.error('Failed to load projects:', error);
+      } catch {
+        // Silently handle error - projects will show empty state
       } finally {
         setLoading(false);
       }

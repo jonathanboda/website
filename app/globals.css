@@ -213,6 +213,15 @@
   }
 }
 
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
 /* ============================================
    CARD HOVER EFFECTS
    ============================================ */
@@ -543,6 +552,10 @@
 
 .animate-slideDown {
   animation: slideDown 0.5s ease-out forwards;
+}
+
+.animate-slideInRight {
+  animation: slideInRight 0.3s ease-out forwards;
 }
 
 .animate-cardFloat {

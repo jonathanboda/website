@@ -25,8 +25,8 @@ export default function ProjectDetailPage() {
           const foundProject = data.projects.find((p: Project) => p.id === params.id);
           setProject(foundProject || null);
         }
-      } catch (error) {
-        console.error('Failed to load project:', error);
+      } catch {
+        // Silently handle error - will show "not found" state
       } finally {
         setLoading(false);
       }

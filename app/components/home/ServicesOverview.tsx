@@ -64,7 +64,7 @@ export default function ServicesOverview() {
       y: 0,
       transition: {
         duration: 0.6,
-        ease: 'easeOut',
+        ease: 'easeOut' as const,
       },
     },
   };
@@ -77,7 +77,7 @@ export default function ServicesOverview() {
       scale: 1,
       transition: {
         duration: 0.6,
-        ease: 'easeOut',
+        ease: 'easeOut' as const,
       },
     },
   };

@@ -38,15 +38,26 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // TODO: Save to database or send to email service
-    console.log('New lead received:', body);
+    // TODO: Implement the following before production:
+    // 1. Save to database (Supabase, PostgreSQL, etc.)
+    // 2. Send email notification to admin
+    // 3. Add rate limiting to prevent spam (e.g., 5 requests per minute per IP)
+    // 4. Add CAPTCHA validation for additional spam protection
+
+    // Log only non-sensitive info for debugging (remove in production)
+    if (process.env.NODE_ENV === 'development') {
+      console.log('New lead received from:', body.name);
+    }
 
     return NextResponse.json(
       { success: true, message: 'Lead received successfully' },
       { status: 201 }
     );
   } catch (error) {
-    console.error('Error processing lead:', error);
+    // Log error for debugging but don't expose details to client
+    if (process.env.NODE_ENV === 'development') {
+      console.error('Error processing lead:', error);
+    }
     return NextResponse.json(
       { error: 'Failed to process request' },
       { status: 500 }

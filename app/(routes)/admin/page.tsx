@@ -3,10 +3,6 @@
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 
-// Hardcoded credentials
-const ADMIN_EMAIL = 'elvenwood.dev@gmail.com';
-const ADMIN_PASSWORD = 'ELVENWOOD@123';
-
 interface Project {
   id: string;
   title: string;
@@ -22,6 +18,15 @@ interface Project {
   description: string;
 }
 
+// Helper to get auth headers with JWT token
+function getAuthHeaders(): HeadersInit {
+  const token = localStorage.getItem('admin_token');
+  return {
+    'Content-Type': 'application/json',
+    ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
+  };
+}
+
 export default function AdminPage() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [email, setEmail] = useState('');
@@ -32,12 +37,24 @@ export default function AdminPage() {
   const [showEditModal, setShowEditModal] = useState(false);
   const [activeTab, setActiveTab] = useState<'all' | 'featured'>('all');
 
-  // Check if already logged in
+  // Check if already logged in with valid token
   useEffect(() => {
-    const loggedIn = localStorage.getItem('admin_logged_in');
-    if (loggedIn === 'true') {
-      setIsLoggedIn(true);
-      loadProjects();
+    const token = localStorage.getItem('admin_token');
+    if (token) {
+      // Verify token is not expired by checking its structure
+      try {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        if (payload.exp * 1000 > Date.now()) {
+          setIsLoggedIn(true);
+          loadProjects();
+        } else {
+          // Token expired, clear it
+          localStorage.removeItem('admin_token');
+        }
+      } catch {
+        // Invalid token, clear it
+        localStorage.removeItem('admin_token');
+      }
     }
   }, []);
 
@@ -60,26 +77,46 @@ export default function AdminPage() {
         const data = await res.json();
         setProjects(data.projects);
       }
-    } catch (error) {
-      console.error('Failed to load projects:', error);
+    } catch {
+      // Silently handle - will show empty state
     }
   };
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
-      setIsLoggedIn(true);
-      localStorage.setItem('admin_logged_in', 'true');
-      loadProjects();
-      setLoginError('');
-    } else {
-      setLoginError('Invalid email or password');
+    setLoginError('');
+
+    try {
+      const response = await fetch('/api/admin/auth', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.token) {
+        // Store JWT token securely
+        localStorage.setItem('admin_token', data.token);
+        setIsLoggedIn(true);
+        setEmail('');
+        setPassword('');
+        loadProjects();
+      } else if (response.status === 429) {
+        // Rate limited
+        setLoginError(`Too many attempts. Please wait ${data.retryAfter} seconds.`);
+      } else {
+        setLoginError(data.error || 'Invalid email or password');
+      }
+    } catch {
+      setLoginError('Login failed. Please try again.');
     }
   };
 
   const handleLogout = () => {
     setIsLoggedIn(false);
-    localStorage.removeItem('admin_logged_in');
+    localStorage.removeItem('admin_token');
+    setProjects([]);
   };
 
   const handleDelete = async (id: string) => {
@@ -88,12 +125,17 @@ export default function AdminPage() {
     try {
       const res = await fetch(`/api/admin/projects/${id}`, {
         method: 'DELETE',
+        headers: getAuthHeaders(),
       });
       if (res.ok) {
         setProjects(projects.filter(p => p.id !== id));
+      } else if (res.status === 401) {
+        // Token expired or invalid
+        handleLogout();
+        setLoginError('Session expired. Please login again.');
       }
-    } catch (error) {
-      console.error('Failed to delete project:', error);
+    } catch {
+      // Silently handle delete error
     }
   };
 
@@ -101,16 +143,19 @@ export default function AdminPage() {
     try {
       const res = await fetch(`/api/admin/projects/${id}`, {
         method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
+        headers: getAuthHeaders(),
         body: JSON.stringify({ featured: !featured }),
       });
       if (res.ok) {
         setProjects(projects.map(p =>
           p.id === id ? { ...p, featured: !featured } : p
         ));
+      } else if (res.status === 401) {
+        handleLogout();
+        setLoginError('Session expired. Please login again.');
       }
-    } catch (error) {
-      console.error('Failed to update project:', error);
+    } catch {
+      // Silently handle update error
     }
   };
 
@@ -122,7 +167,7 @@ export default function AdminPage() {
 
       const res = await fetch(url, {
         method,
-        headers: { 'Content-Type': 'application/json' },
+        headers: getAuthHeaders(),
         body: JSON.stringify(project),
       });
 
@@ -135,9 +180,12 @@ export default function AdminPage() {
         }
         setShowEditModal(false);
         setEditingProject(null);
+      } else if (res.status === 401) {
+        handleLogout();
+        setLoginError('Session expired. Please login again.');
       }
-    } catch (error) {
-      console.error('Failed to save project:', error);
+    } catch {
+      // Silently handle save error
     }
   };
 
@@ -430,8 +478,10 @@ function EditProjectModal({
       formDataUpload.append('file', file);
 
       try {
+        const token = localStorage.getItem('admin_token');
         const res = await fetch('/api/upload', {
           method: 'POST',
+          headers: token ? { 'Authorization': `Bearer ${token}` } : {},
           body: formDataUpload,
         });
 
@@ -439,8 +489,8 @@ function EditProjectModal({
           const data = await res.json();
           newImages.push(data.url);
         }
-      } catch (error) {
-        console.error('Upload failed:', error);
+      } catch {
+        // Silently handle upload error
       }
     }
 

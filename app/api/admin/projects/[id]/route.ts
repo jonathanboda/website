@@ -1,8 +1,24 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
+import { verifyToken, extractTokenFromHeader } from '@/app/lib/auth';
 
 const dataFilePath = path.join(process.cwd(), 'app/data/projects.json');
+
+/**
+ * Validate admin authentication using JWT token
+ */
+function checkAdminAuth(request: NextRequest): boolean {
+  const authHeader = request.headers.get('authorization');
+  const token = extractTokenFromHeader(authHeader);
+
+  if (!token) {
+    return false;
+  }
+
+  const payload = verifyToken(token);
+  return payload !== null && payload.role === 'admin';
+}
 
 interface Project {
   id: string;
@@ -32,7 +48,7 @@ function writeProjects(data: { projects: Project[] }) {
   fs.writeFileSync(dataFilePath, JSON.stringify(data, null, 2));
 }
 
-// GET - Get single project
+// GET - Get single project (public endpoint)
 export async function GET(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
@@ -48,11 +64,19 @@ export async function GET(
   return NextResponse.json({ project });
 }
 
-// PUT - Update project
+// PUT - Update project (protected endpoint)
 export async function PUT(
-  request: Request,
+  request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  // Validate JWT token
+  if (!checkAdminAuth(request)) {
+    return NextResponse.json(
+      { error: 'Unauthorized - valid JWT token required' },
+      { status: 401 }
+    );
+  }
+
   try {
     const { id } = await params;
     const updatedProject = await request.json();
@@ -67,16 +91,25 @@ export async function PUT(
     writeProjects(data);
 
     return NextResponse.json({ success: true, project: data.projects[index] });
-  } catch {
+  } catch (error) {
+    console.error('Failed to update project:', error);
     return NextResponse.json({ error: 'Failed to update project' }, { status: 500 });
   }
 }
 
-// PATCH - Partial update (for feature toggle)
+// PATCH - Partial update (protected endpoint)
 export async function PATCH(
-  request: Request,
+  request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  // Validate JWT token
+  if (!checkAdminAuth(request)) {
+    return NextResponse.json(
+      { error: 'Unauthorized - valid JWT token required' },
+      { status: 401 }
+    );
+  }
+
   try {
     const { id } = await params;
     const updates = await request.json();
@@ -91,16 +124,25 @@ export async function PATCH(
     writeProjects(data);
 
     return NextResponse.json({ success: true, project: data.projects[index] });
-  } catch {
+  } catch (error) {
+    console.error('Failed to update project:', error);
     return NextResponse.json({ error: 'Failed to update project' }, { status: 500 });
   }
 }
 
-// DELETE - Delete project
+// DELETE - Delete project (protected endpoint)
 export async function DELETE(
-  request: Request,
+  request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  // Validate JWT token
+  if (!checkAdminAuth(request)) {
+    return NextResponse.json(
+      { error: 'Unauthorized - valid JWT token required' },
+      { status: 401 }
+    );
+  }
+
   try {
     const { id } = await params;
     const data = readProjects();
@@ -114,7 +156,8 @@ export async function DELETE(
     writeProjects(data);
 
     return NextResponse.json({ success: true });
-  } catch {
+  } catch (error) {
+    console.error('Failed to delete project:', error);
     return NextResponse.json({ error: 'Failed to delete project' }, { status: 500 });
   }
 }

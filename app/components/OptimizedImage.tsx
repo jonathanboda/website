@@ -50,7 +50,6 @@ export default function OptimizedImage({
 
   const handleError = () => {
     setHasError(true);
-    console.log(`Image failed to load: ${src}`);
   };
 
   // Fallback placeholder for missing images
